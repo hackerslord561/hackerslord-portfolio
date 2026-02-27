@@ -3,6 +3,8 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -19,10 +21,15 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-        <body className={`${inter.variable} ${playfair.variable} font-sans antialiased overflow-x-hidden w-full selection:bg-accent selection:text-accent-foreground`}>
-        {/* AuthProvider secures the Admin routes, Providers handles Dark/Light Mode */}
+        {/* Added cursor-none globally to the body */}
+        <body className={`${inter.variable} ${playfair.variable} font-sans antialiased overflow-x-hidden w-full selection:bg-accent selection:text-accent-foreground cursor-none`}>
         <AuthProvider>
             <Providers>
+                {/* Global UI Elements */}
+                <CustomCursor />
+                <ThemeToggle />
+
+                {/* Page Content */}
                 {children}
             </Providers>
         </AuthProvider>

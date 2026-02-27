@@ -14,13 +14,14 @@ export function ThemeToggle() {
     }, []);
 
     if (!mounted) {
-        return <div className="fixed top-6 right-6 z-50 w-10 h-10" />; // Placeholder of same size
+        return <div className="fixed bottom-6 right-6 z-[100] w-10 h-10" />; // Placeholder of same size
     }
 
     return (
         <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="fixed top-6 right-6 z-50 p-2 rounded-full bg-background text-foreground border border-border shadow-sm hover:bg-accent hover:text-accent-foreground transition-all duration-300 ease-in-out"
+            // Changed from top-6 to bottom-6 and increased z-index
+            className="fixed bottom-6 right-6 z-[100] p-2 rounded-full bg-background text-foreground border border-border shadow-sm hover:bg-accent hover:text-accent-foreground transition-all duration-300 ease-in-out clickable"
             aria-label="Toggle theme"
         >
             <div className="relative w-5 h-5 flex items-center justify-center">
