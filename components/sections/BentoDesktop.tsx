@@ -3,12 +3,21 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FolderKanban, User, Wrench, FileText, Mail, Github, Linkedin, Twitter } from "lucide-react";
+
+// Widgets
 import { ClockWidget } from "@/components/widgets/ClockWidget";
 import { WeatherWidget } from "@/components/widgets/WeatherWidget";
 import { CalendarWidget } from "@/components/widgets/CalendarWidget";
+
+// UI Components
 import { AppIcon } from "@/components/ui/AppIcon";
 import { AppWindow } from "@/components/ui/AppWindow";
+
+// Windows
 import { ProjectsWindow } from "@/components/windows/ProjectsWindow";
+import { AboutWindow } from "@/components/windows/AboutWindow";
+import { SkillsWindow } from "@/components/windows/SkillsWindow";
+import { ResumeWindow } from "@/components/windows/ResumeWindow";
 
 type AppType = "Projects" | "About" | "Skills" | "Resume" | null;
 
@@ -37,53 +46,114 @@ export function BentoDesktop() {
                     initial="hidden"
                     animate="show"
                 >
-                    {/* Left Column: Widgets */}
+                    {/* Left Column: Widgets (Clock, Calendar, Weather) */}
                     <div className="md:col-span-4 flex flex-col gap-6">
-                        <motion.div variants={item} className="h-32"><ClockWidget /></motion.div>
-                        <motion.div variants={item} className="h-64"><CalendarWidget /></motion.div>
-                        <motion.div variants={item} className="h-40"><WeatherWidget /></motion.div>
+                        <motion.div variants={item} className="h-32">
+                            <ClockWidget />
+                        </motion.div>
+
+                        <motion.div variants={item} className="h-64">
+                            <CalendarWidget />
+                        </motion.div>
+
+                        <motion.div variants={item} className="h-40">
+                            <WeatherWidget />
+                        </motion.div>
                     </div>
 
                     {/* Middle Column: Large Apps */}
                     <div className="md:col-span-8 grid grid-cols-2 gap-6 items-start content-start">
                         <motion.div variants={item}>
-                            <AppIcon title="Projects" icon={FolderKanban} colorClass="bg-blue-500" isLarge onClick={() => setActiveApp("Projects")} />
+                            <AppIcon
+                                title="Projects"
+                                icon={FolderKanban}
+                                colorClass="bg-blue-500"
+                                isLarge
+                                onClick={() => setActiveApp("Projects")}
+                            />
                         </motion.div>
                         <motion.div variants={item}>
-                            <AppIcon title="About" icon={User} colorClass="bg-purple-500" isLarge onClick={() => setActiveApp("About")} />
+                            <AppIcon
+                                title="About"
+                                icon={User}
+                                colorClass="bg-purple-500"
+                                isLarge
+                                onClick={() => setActiveApp("About")}
+                            />
                         </motion.div>
                         <motion.div variants={item}>
-                            <AppIcon title="Skills" icon={Wrench} colorClass="bg-red-500" isLarge onClick={() => setActiveApp("Skills")} />
+                            <AppIcon
+                                title="Skills"
+                                icon={Wrench}
+                                colorClass="bg-red-500"
+                                isLarge
+                                onClick={() => setActiveApp("Skills")}
+                            />
                         </motion.div>
                         <motion.div variants={item}>
-                            <AppIcon title="Resume" icon={FileText} colorClass="bg-orange-500" isLarge onClick={() => setActiveApp("Resume")} />
+                            <AppIcon
+                                title="Resume"
+                                icon={FileText}
+                                colorClass="bg-orange-500"
+                                isLarge
+                                onClick={() => setActiveApp("Resume")}
+                            />
                         </motion.div>
 
-                        {/* Bottom Row: Social & Contact */}
+                        {/* Bottom Row: Social & Contact Mini Apps */}
                         <div className="col-span-2 grid grid-cols-4 gap-6 mt-2">
-                            <motion.div variants={item}><AppIcon title="Contact" icon={Mail} colorClass="bg-green-500" href="mailto:isaiahkboadi14@gmail.com" /></motion.div>
-                            <motion.div variants={item}><AppIcon title="GitHub" icon={Github} colorClass="bg-gray-800 dark:bg-gray-700" href="#" /></motion.div>
-                            <motion.div variants={item}><AppIcon title="LinkedIn" icon={Linkedin} colorClass="bg-blue-600" href="#" /></motion.div>
-                            <motion.div variants={item}><AppIcon title="X" icon={Twitter} colorClass="bg-black" href="https://x.com/hackerslord_24" /></motion.div>
+                            <motion.div variants={item}>
+                                <AppIcon
+                                    title="Contact"
+                                    icon={Mail}
+                                    colorClass="bg-green-500"
+                                    href="mailto:isaiahkboadi14@gmail.com"
+                                />
+                            </motion.div>
+                            <motion.div variants={item}>
+                                <AppIcon
+                                    title="GitHub"
+                                    icon={Github}
+                                    colorClass="bg-gray-800 dark:bg-gray-700"
+                                    href="#"
+                                />
+                            </motion.div>
+                            <motion.div variants={item}>
+                                <AppIcon
+                                    title="LinkedIn"
+                                    icon={Linkedin}
+                                    colorClass="bg-blue-600"
+                                    href="#"
+                                />
+                            </motion.div>
+                            <motion.div variants={item}>
+                                <AppIcon
+                                    title="X"
+                                    icon={Twitter}
+                                    colorClass="bg-black"
+                                    href="https://x.com/hackerslord_24"
+                                />
+                            </motion.div>
                         </div>
                     </div>
                 </motion.div>
             </section>
 
-            {/* OS Windows */}
+            {/* OS Windows Rendering */}
             <AppWindow title="Projects.app" isOpen={activeApp === "Projects"} onClose={() => setActiveApp(null)}>
                 <ProjectsWindow />
             </AppWindow>
 
-            {/* We will build these remaining windows next if you want! */}
             <AppWindow title="About.app" isOpen={activeApp === "About"} onClose={() => setActiveApp(null)}>
-                <div className="h-full flex items-center justify-center text-foreground/50">About content loading...</div>
+                <AboutWindow />
             </AppWindow>
+
             <AppWindow title="Skills.app" isOpen={activeApp === "Skills"} onClose={() => setActiveApp(null)}>
-                <div className="h-full flex items-center justify-center text-foreground/50">Skills content loading...</div>
+                <SkillsWindow />
             </AppWindow>
+
             <AppWindow title="Resume.app" isOpen={activeApp === "Resume"} onClose={() => setActiveApp(null)}>
-                <div className="h-full flex items-center justify-center text-foreground/50">Resume content loading...</div>
+                <ResumeWindow />
             </AppWindow>
         </>
     );
