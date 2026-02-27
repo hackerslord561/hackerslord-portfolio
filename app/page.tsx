@@ -1,21 +1,20 @@
+import { CustomCursor } from "@/components/ui/CustomCursor";
+import { BentoDesktop } from "@/components/sections/BentoDesktop";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { Hero } from "@/components/sections/Hero";
-import { Work } from "@/components/sections/Work";
-import { About } from "@/components/sections/About";
-import { Experience } from "@/components/sections/Experience";
 
 export default function Home() {
     return (
-        <main className="relative min-h-screen w-full flex flex-col">
-            <ThemeToggle />
-            <Hero />
-            <Work />
-            <Experience />
-            <About />
+        <main className="relative min-h-screen w-full flex flex-col bg-background selection:bg-accent selection:text-accent-foreground">
+            {/* The custom anime pointer */}
+            <CustomCursor />
 
-            <footer className="w-full py-12 text-center text-sm text-foreground/50 font-sans border-t border-border/20">
-                © {new Date().getFullYear()} Isaiah Katakyie Boadi. All rights reserved.
-            </footer>
+            {/* Optional: Keep theme toggle but make it fit the OS vibe */}
+            <div className="clickable">
+                <ThemeToggle />
+            </div>
+
+            {/* The OS Interface */}
+            <BentoDesktop />
         </main>
     );
 }
