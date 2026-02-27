@@ -5,7 +5,11 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'firebasestorage.googleapis.com', // <-- This is the crucial addition!
+                hostname: 'firebasestorage.googleapis.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'drive.google.com', // <-- Added this!
             },
             {
                 protocol: 'https',
