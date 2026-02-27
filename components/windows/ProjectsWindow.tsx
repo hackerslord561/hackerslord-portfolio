@@ -1,43 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { Loader2 } from "lucide-react";
 
 type Category = "All" | "Photography" | "Websites" | "Video Edits" | "Cinematography";
 
 interface Project {
     id: string;
     title: string;
-    category: Category;
-    imageSrc?: string;
+    category: string;
+    imageSrc: string;
+    link?: string;
 }
-
-const portfolioData: Project[] = [
-    // Websites
-    { id: "1", title: "KNUST E-learning Data Center", category: "Websites" },
-    { id: "2", title: "Vault Git Version Control", category: "Websites" },
-    { id: "3", title: "Hostelhubb", category: "Websites" },
-    { id: "4", title: "Achimota School 2002 Year Group Website", category: "Websites" },
-    { id: "5", title: "Berry Pulse Media Website", category: "Websites" },
-    // Video Edits
-    { id: "6", title: "Tasty Tom Promo Video", category: "Video Edits" },
-    { id: "7", title: "Berry Pulse Media Highlights Reel", category: "Video Edits" },
-    { id: "8", title: "Berry Pulse News Reel", category: "Video Edits" },
-    // Cinematography
-    { id: "9", title: "CWA Movie Premiere Animation", category: "Cinematography" },
-    { id: "10", title: "Hype Room Studios Trailer", category: "Cinematography" },
-    // Photography
-    { id: "11", title: "Lauderium Shots", category: "Photography" },
-    { id: "12", title: "TLOC Lauderium 4.0", category: "Photography" }
-];
 
 const categories: Category[] = ["All", "Photography", "Websites", "Video Edits", "Cinematography"];
 
 export function ProjectsWindow() {
     const [activeCategory, setActiveCategory] = useState<Category>("All");
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredProjects = portfolioData.filter(
+    // Fetch projects from Firebase when the window opens
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                // Query projects ordered by creation date (newest first)
+                const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                const fetchedProjects = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })) as Project[];
+
+                setProjects(fetchedProjects);
+            } catch (error) {
+                console.error("Error fetching projects:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
+    const filteredProjects = projects.filter(
         (project) => activeCategory === "All" || project.category === activeCategory
     );
 
@@ -49,7 +59,7 @@ export function ProjectsWindow() {
                         Selected Works
                     </h2>
                     <p className="text-foreground/60 font-sans max-w-md text-sm">
-                        A curated collection of visual stories, digital experiences, and cinematic moments.
+                        A curated collection of visual stories, digital experiences, and cinematic moments from the Mainframe.
                     </p>
                 </div>
 
@@ -71,26 +81,38 @@ export function ProjectsWindow() {
                 </div>
             </div>
 
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 pb-12">
-                <AnimatePresence mode="popLayout">
-                    {filteredProjects.map((project) => (
-                        <motion.div
-                            key={project.id}
-                            layout
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-                        >
-                            <ProjectCard
-                                title={project.title}
-                                category={project.category}
-                                imageSrc={project.imageSrc}
-                            />
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
-            </motion.div>
+            {loading ? (
+                <div className="w-full h-64 flex flex-col items-center justify-center gap-4 text-foreground/50">
+                    <Loader2 className="w-8 h-8 animate-spin" />
+                    <span className="text-xs font-sans tracking-widest uppercase">Fetching from Database...</span>
+                </div>
+            ) : projects.length === 0 ? (
+                <div className="w-full h-64 flex items-center justify-center text-foreground/50 font-sans">
+                    No projects found. Add some from the Admin Dashboard!
+                </div>
+            ) : (
+                <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10 pb-12">
+                    <AnimatePresence mode="popLayout">
+                        {filteredProjects.map((project) => (
+                            <motion.div
+                                key={project.id}
+                                layout
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+                            >
+                                <ProjectCard
+                                    title={project.title}
+                                    category={project.category}
+                                    imageSrc={project.imageSrc}
+                                    link={project.link}
+                                />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
+            )}
         </div>
     );
 }
