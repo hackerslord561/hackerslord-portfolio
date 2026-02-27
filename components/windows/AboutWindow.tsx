@@ -26,7 +26,7 @@ export function AboutWindow() {
             <motion.div variants={item} className="md:w-1/3 flex flex-col gap-6">
                 <div className="aspect-square w-full bg-accent rounded-2xl overflow-hidden relative border border-border/50">
                     <Image
-                        src="https://drive.google.com/file/d/1Hwo-nm_F7u67FoAWAC9z6A6Vl2M1wxdc/view?usp=sharing"
+                        src="https://drive.google.com/file/d/1Hwo-nm_F7u67FoAWAC9z6A6Vl2M1wxdc/view"
                         alt="Isaiah Katakyie Boadi"
                         fill
                         sizes="(max-width: 768px) 100vw, 33vw"
