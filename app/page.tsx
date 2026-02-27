@@ -14,7 +14,7 @@ export default function Home() {
 
                 {/* Footer */}
                 <footer className="w-full py-12 text-center text-sm text-foreground/50 font-sans border-t border-border/20">
-                    © {new Date().getFullYear()} Isaiah Katakyie Boadi. All rights reserved.
+                    © {new Date().getFullYear()} Isaiah Katakyie Boadi(Hackerslord). All rights reserved.
                 </footer>
             </div>
         </main>

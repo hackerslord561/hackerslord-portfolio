@@ -110,8 +110,8 @@ export function BentoDesktop() {
                             {/* Bottom Row: Social & Contact Mini Apps */}
                             <div className="col-span-2 lg:col-span-4 grid grid-cols-4 gap-4 lg:gap-6 mt-2">
                                 <motion.div variants={item}><AppIcon title="Mail" icon={Mail} colorClass="bg-green-500" href="mailto:isaiahkboadi14@gmail.com" /></motion.div>
-                                <motion.div variants={item}><AppIcon title="GitHub" icon={Github} colorClass="bg-gray-800 dark:bg-gray-700" href="#" /></motion.div>
-                                <motion.div variants={item}><AppIcon title="LinkedIn" icon={Linkedin} colorClass="bg-blue-600" href="#" /></motion.div>
+                                <motion.div variants={item}><AppIcon title="GitHub" icon={Github} colorClass="bg-gray-800 dark:bg-gray-700" href="https://github.com/hackerslord561" /></motion.div>
+                                <motion.div variants={item}><AppIcon title="LinkedIn" icon={Linkedin} colorClass="bg-blue-600" href="https://www.linkedin.com/in/isaiah-katakyie-boadi-a3b52a297" /></motion.div>
                                 <motion.div variants={item}><AppIcon title="X" icon={Twitter} colorClass="bg-black" href="https://x.com/hackerslord_24" /></motion.div>
                             </div>
                         </div>
