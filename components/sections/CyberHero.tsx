@@ -31,13 +31,13 @@ export function CyberHero() {
         >
             {/* 1. The Binary Rain Video Background */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-background">
+                {/* FIX: Removed mix-blend-screen and added standard opacity that works in both modes */}
                 <video
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload="auto"
-                    {/* FIX: Removed mix-blend-screen and added standard opacity that works in both modes */}
                     className="w-full h-full object-cover opacity-20 dark:opacity-40"
                 >
                     <source src="/assets/cyber-bg.mp4" type="video/mp4" />
