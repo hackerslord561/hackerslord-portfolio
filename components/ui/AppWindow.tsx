@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Maximize2 } from "lucide-react";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 
 interface AppWindowProps {
     title: string;
@@ -12,14 +12,8 @@ interface AppWindowProps {
 }
 
 export function AppWindow({ title, isOpen, onClose, children }: AppWindowProps) {
-    // Prevent body scrolling when a window is open
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-        }
-    }, [isOpen]);
+    // We completely removed the useEffect that locked the body scroll.
+    // Now, the main page can scroll freely in the background while the window is open!
 
     return (
         <AnimatePresence>
@@ -38,12 +32,13 @@ export function AppWindow({ title, isOpen, onClose, children }: AppWindowProps) 
                     />
 
                     <motion.div
-                        className="relative w-full max-w-5xl max-h-full flex flex-col bg-background/80 dark:bg-background/90 backdrop-blur-2xl border border-border/50 shadow-2xl rounded-xl overflow-hidden cursor-none"
+                        className="relative w-full max-w-5xl flex flex-col bg-background/80 dark:bg-background/90 backdrop-blur-2xl border border-border/50 shadow-2xl rounded-xl overflow-hidden cursor-none"
                         initial={{ scale: 0.9, y: 20, opacity: 0 }}
                         animate={{ scale: 1, y: 0, opacity: 1 }}
                         exit={{ scale: 0.95, y: 10, opacity: 0 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        style={{ height: "85vh" }}
+                        // Fix: Replaced forced height with dynamic height so it never cuts off
+                        style={{ height: "auto", maxHeight: "85vh" }}
                     >
                         {/* Window Title Bar */}
                         <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-foreground/5 select-none">
