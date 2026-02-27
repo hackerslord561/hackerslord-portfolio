@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ShieldAlert, TerminalSquare } from "lucide-react";
+import Image from "next/image";
 
 export function CyberHero() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -29,17 +30,17 @@ export function CyberHero() {
             className="relative h-[120vh] w-full flex flex-col items-center justify-center overflow-hidden cursor-none"
         >
             {/* 1. The Binary Rain Video Background */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-background">
                 <video
                     autoPlay
                     loop
                     muted
                     playsInline
+                    preload="auto"
                     className="w-full h-full object-cover opacity-40 mix-blend-screen"
                 >
                     <source src="/assets/cyber-bg.mp4" type="video/mp4" />
                 </video>
-                {/* Gradient overlay to blend the video into the OS desktop seamlessly */}
                 <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/60 to-background" />
             </div>
 
@@ -62,10 +63,13 @@ export function CyberHero() {
                 className="absolute left-4 md:left-20 top-1/4 z-30 opacity-70 blur-[2px] pointer-events-none"
             >
                 <div className="relative w-24 h-24 md:w-40 md:h-40">
-                    <img
+                    <Image
                         src="/assets/prop-padlock.png"
                         alt="Security Prop"
-                        className="object-contain w-full h-full drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                        fill
+                        priority
+                        sizes="(max-width: 768px) 96px, 160px"
+                        className="object-contain drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                         onError={(e) => {
                             e.currentTarget.style.display = 'none';
                             e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-foreground/10 rounded-2xl backdrop-blur-xl border border-border/50 shadow-2xl rotate-12"><ShieldAlert class="w-12 h-12 text-foreground/50" /></div>';
@@ -79,10 +83,13 @@ export function CyberHero() {
                 className="absolute right-4 md:right-20 bottom-1/4 z-30 opacity-60 blur-[3px] pointer-events-none"
             >
                 <div className="relative w-32 h-32 md:w-48 md:h-48">
-                    <img
+                    <Image
                         src="/assets/prop-chip.png"
                         alt="Hardware Prop"
-                        className="object-contain w-full h-full drop-shadow-[0_0_40px_rgba(255,255,255,0.1)] -rotate-12"
+                        fill
+                        priority
+                        sizes="(max-width: 768px) 128px, 192px"
+                        className="object-contain drop-shadow-[0_0_40px_rgba(255,255,255,0.1)] -rotate-12"
                         onError={(e) => {
                             e.currentTarget.style.display = 'none';
                             e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-foreground/10 rounded-2xl backdrop-blur-xl border border-border/50 shadow-2xl -rotate-12"><TerminalSquare class="w-16 h-16 text-foreground/50" /></div>';
@@ -96,10 +103,13 @@ export function CyberHero() {
                 style={{ y: hackerY, scale: hackerScale }}
                 className="relative z-20 w-[90%] md:w-[600px] h-[50vh] md:h-[70vh] flex items-end justify-center pointer-events-none"
             >
-                <img
+                <Image
                     src="/assets/hacker-main.png"
                     alt="Hackerslord Mainframe"
-                    className="object-contain w-full h-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 90vw, 600px"
+                    className="object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                     onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         e.currentTarget.parentElement!.innerHTML = '<div class="w-[300px] h-[400px] bg-gradient-to-t from-foreground/20 to-transparent rounded-t-full border-t border-border/50 backdrop-blur-sm flex items-end justify-center pb-10"><span class="text-foreground/30 font-sans tracking-widest text-sm">[ hacker-main.png ]</span></div>';

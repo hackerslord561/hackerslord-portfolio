@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { GraduationCap, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 export function AboutWindow() {
     const container = {
@@ -24,10 +25,13 @@ export function AboutWindow() {
             {/* Left Sidebar: Profile Details */}
             <motion.div variants={item} className="md:w-1/3 flex flex-col gap-6">
                 <div className="aspect-square w-full bg-accent rounded-2xl overflow-hidden relative border border-border/50">
-                    <img
+                    <Image
                         src="https://i.pinimg.com/originals/b6/99/1c/b6991c27a36077737c09a40cb31ecdef.jpg"
                         alt="Isaiah Katakyie Boadi"
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        priority // Loads this immediately since it's above the fold in the window
+                        className="object-cover"
                     />
                 </div>
 

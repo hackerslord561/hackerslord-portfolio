@@ -10,6 +10,18 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'upload.wikimedia.org',
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'carmentune.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'zeroheight-wordpress-uploads.s3.amazonaws.com',
             }
         ],
     },
