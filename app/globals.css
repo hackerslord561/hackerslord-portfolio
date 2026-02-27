@@ -8,17 +8,25 @@
     --color-border: hsl(var(--border));
     --color-accent: hsl(var(--accent));
     --color-accent-foreground: hsl(var(--accent-foreground));
+
+    /* Deep OS Backgrounds */
+    --color-os-bg-start: hsl(230, 40%, 15%);
+    --color-os-bg-end: hsl(260, 50%, 20%);
 }
 
 @layer base {
     :root {
-        --background: 0 0% 98%;
+        --background: 230 40% 98%;
         --foreground: 240 10% 3.9%;
         --card: 0 0% 100%;
         --card-foreground: 240 10% 3.9%;
         --border: 240 5.9% 90%;
         --accent: 240 4.8% 95.9%;
         --accent-foreground: 240 5.9% 10%;
+
+        /* Light mode OS gradient */
+        --os-bg-start: 220 30% 90%;
+        --os-bg-end: 260 30% 85%;
     }
 
     .dark {
@@ -29,25 +37,40 @@
         --border: 240 3.7% 15.9%;
         --accent: 240 3.7% 15.9%;
         --accent-foreground: 0 0% 98%;
+
+        /* Dark mode OS gradient (Matching Femi's purple/blue depth) */
+        --os-bg-start: 230 50% 12%;
+        --os-bg-end: 270 60% 18%;
     }
 }
 
 body {
-    background-color: hsl(var(--background));
+    /* We hide the cursor across the entire app for our custom one */
+    cursor: none !important;
+    background: linear-gradient(135deg, hsl(var(--os-bg-start)), hsl(var(--os-bg-end)));
     color: hsl(var(--foreground));
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent scrolling on the "OS" desktop level */
+    transition-property: color, background, border-color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
 }
 
-/* Custom scrollbar for an editorial feel */
-::-webkit-scrollbar {
-    width: 8px;
+/* Fallback for links and buttons so they don't show the default pointer either */
+a, button, [role="button"] {
+    cursor: none !important;
 }
-::-webkit-scrollbar-track {
-    background: transparent;
+
+/* Reusable Glass Panel Utility */
+@utility glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--border));
-    border-radius: 9999px;
+
+.dark .glass-panel {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
