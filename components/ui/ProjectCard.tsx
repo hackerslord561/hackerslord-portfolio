@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Images } from "lucide-react";
 import Image from "next/image";
 
 interface ProjectCardProps {
@@ -9,18 +9,21 @@ interface ProjectCardProps {
     category: string;
     imageSrc?: string;
     link?: string;
+    gallery?: string[];
+    onClick?: () => void; // Added onClick handler
 }
 
-export function ProjectCard({ title, category, imageSrc, link }: ProjectCardProps) {
+export function ProjectCard({ title, category, imageSrc, link, gallery, onClick }: ProjectCardProps) {
+    const isGallery = gallery && gallery.length > 0;
+
+    // If it's a gallery, we want it to act like a button. If not, it acts like a link.
+    const CardWrapper = isGallery ? "button" : motion.a;
+    const wrapperProps = isGallery
+        ? { onClick, className: "group block w-full cursor-none overflow-hidden clickable text-left" }
+        : { href: link || "#", target: "_blank", rel: "noopener noreferrer", className: "group block w-full cursor-none overflow-hidden clickable" };
+
     return (
-        <motion.a
-            href={link || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block w-full cursor-none overflow-hidden clickable"
-            initial="initial"
-            whileHover="hover"
-        >
+        <CardWrapper {...wrapperProps as any}>
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-accent rounded-2xl mb-4 border border-border/50">
                 {imageSrc ? (
                     <motion.div
@@ -51,7 +54,7 @@ export function ProjectCard({ title, category, imageSrc, link }: ProjectCardProp
                     className="absolute inset-0 bg-background/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center pointer-events-none"
                 >
                     <div className="bg-background text-foreground rounded-full p-3 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                        <ArrowUpRight className="w-5 h-5" />
+                        {isGallery ? <Images className="w-5 h-5" /> : <ArrowUpRight className="w-5 h-5" />}
                     </div>
                 </motion.div>
             </div>
@@ -64,6 +67,6 @@ export function ProjectCard({ title, category, imageSrc, link }: ProjectCardProp
                     {title}
                 </h3>
             </div>
-        </motion.a>
+        </CardWrapper>
     );
 }
